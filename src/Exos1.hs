@@ -2,6 +2,8 @@
 
 module Exos1  where
 
+-- Credit cards number
+
 validate :: Integer -> Bool
 validate d = remainder d == 0
   where
@@ -50,3 +52,17 @@ myReverse l = rev l []
   where
     rev [] ys = ys
     rev (x:xs) ys = rev xs $ x:ys
+
+-- Tower of Hanoi
+
+type Peg = String
+type Move = (Peg, Peg)
+
+hanoi :: Integer -> Peg -> Peg -> Peg -> [Move]
+hanoi 0 _ _ _ = []
+hanoi discs from to tmp =
+  (hanoi (discs - 1) from tmp to) ++ [(from, to)] ++ (hanoi (discs - 1) tmp to from)
+    
+hanoi4 :: Integer -> Peg -> Peg -> Peg -> Peg -> [Move]
+hanoi4 0 _ _ _ _ = []
+hanoi4 discs from to tmp1 tmp2 = undefined
