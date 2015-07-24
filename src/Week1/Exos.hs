@@ -1,6 +1,6 @@
 {-# OPTIONS_GHC -Wall #-}
 
-module Exos1  where
+module Week1.Exos where
 
 -- Credit cards number
 

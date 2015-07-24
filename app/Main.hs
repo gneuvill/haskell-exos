@@ -1,6 +1,7 @@
 module Main where
 
-import Exos1
+import Week1.Exos
+import Week2.LogAnalysis
 
 main :: IO ()
-main = someFunc
+main = undefined
