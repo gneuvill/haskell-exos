@@ -1,5 +1,3 @@
-{-# OPTIONS_GHC -Wall #-}
-
 module Week2.LogAnalysis  where
 
 import Week2.Log
