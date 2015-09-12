@@ -2,6 +2,8 @@
 
 module Week3.Golf where
 
+import Data.List
+
 skips :: [a] -> [[a]]
 skips as = map (map snd . filterNth . fst) ias
   where
@@ -19,3 +21,38 @@ localMaxima xs
     isLocMax (a, b, c) = a <= b && b >= c -- does a given triplet identify a local maximum ?
     getSnd (_, b, _) = b -- get the second elt of a triplet
 
+histogram :: [Integer] -> String
+histogram = showHist . hist . group . sort
+
+type Row = String
+type Histogram = [Row]
+
+row :: [Integer] -> Row
+row is = map (showBool . inIs) [0..9]
+  where
+    inIs = flip elem $ is
+    showBool b = if b then '*' else ' '
+
+hist :: [[Integer]] -> Histogram
+hist = (++ bottom). tail . loopHist
+  where
+    bottom = ["==========", "0123456789"]
+    loopHist [] = []
+    loopHist is = (loopHist $ map tail safeIs) ++ [row $ map head safeIs]
+      where
+        safeIs = filter (not . null) is
+            
+showHist :: Histogram -> String
+showHist = (++ "\n") . concat . intersperse "\n"
+
+-- row :: Integer -> Row
+-- row i = spaces n ++ "*" ++ spaces (9 - n)
+--   where
+--     n = fromInteger i
+--     spaces = flip replicate ' '
+
+-- hist :: [Row] -> Histogram
+-- hist =  (++ ["0123456789"]) . (++ ["=========="])
+
+-- showHist :: Histogram -> String
+-- showHist = (++ "\n") . concat . intersperse "\n"
