@@ -45,14 +45,3 @@ hist = (++ bottom). tail . loopHist
 showHist :: Histogram -> String
 showHist = (++ "\n") . concat . intersperse "\n"
 
--- row :: Integer -> Row
--- row i = spaces n ++ "*" ++ spaces (9 - n)
---   where
---     n = fromInteger i
---     spaces = flip replicate ' '
-
--- hist :: [Row] -> Histogram
--- hist =  (++ ["0123456789"]) . (++ ["=========="])
-
--- showHist :: Histogram -> String
--- showHist = (++ "\n") . concat . intersperse "\n"
