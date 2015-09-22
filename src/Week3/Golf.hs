@@ -22,7 +22,7 @@ localMaxima xs
     getSnd (_, b, _) = b -- get the second elt of a triplet
 
 histogram :: [Integer] -> String
-histogram = showHist . hist . group . sort
+histogram = showHist . hist
 
 type Row = String
 type Histogram = [Row]
@@ -33,8 +33,8 @@ row is = map (showBool . inIs) [0..9]
     inIs = flip elem $ is
     showBool b = if b then '*' else ' '
 
-hist :: [[Integer]] -> Histogram
-hist = (++ bottom). tail . loopHist
+hist :: [Integer] -> Histogram
+hist = (++ bottom). tail . loopHist . group . sort
   where
     bottom = ["==========", "0123456789"]
     loopHist [] = []
