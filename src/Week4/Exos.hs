@@ -1,14 +1,11 @@
-{-# OPTIONS_GHC -Wall #-}
-
 module Week4.Exos where
 
 -- ## Exo 1
 
 fun1 :: [Integer] -> Integer
 fun1 [] = 1
-fun1 (x:xs)
-  | even x    = (x - 2) * fun1 xs
-  | otherwise = fun1 xs
+fun1 (x:xs) | even x    = (x - 2) * fun1 xs
+            | otherwise = fun1 xs
 
 fun2 :: Integer -> Integer
 fun2 1 = 0
@@ -21,7 +18,8 @@ fun1' = product . map (subtract 2) . filter even
 fun2' :: Integer -> Integer
 fun2' = sum . filter even . takeWhile (/= 1) . iterate f
   where
-    f n = if even n then n `div` 2 else 3 * n + 1
+    f n | even n = n `div` 2
+        | otherwise = 3 * n + 1
 
 -- ## Exo 2
 
@@ -32,18 +30,13 @@ data Tree a = Leaf
 foldTree :: [a] -> Tree a
 foldTree = foldr insert Leaf
   where
-    insert :: a -> Tree a -> Tree a
     insert a Leaf = Node 0 Leaf a Leaf
-    insert a (Node _ t1 a0 t2) =
-      if insertRight
-      then Node newHeight t1 a0 newSubTree
-      else Node newHeight newSubTree a0 t2
-      where
-        insertRight = getHeight t1 > getHeight t2
-        newSubTree = insert a $ if insertRight then t2 else t1
-        newHeight =
-          1 + max (getHeight newSubTree) (getHeight $ if insertRight then t1 else t2)
-    getHeight :: Tree a -> Integer
+    insert a (Node _ t1 a0 t2)
+      | getHeight t1 > getHeight t2 = newTree t1 a0 (insert a t2)
+      | otherwise = newTree (insert a t1) a0 t2
+    newTree t b t' =
+      let newHeight = 1 + max (getHeight t) (getHeight t')
+      in Node newHeight t b t'
     getHeight Leaf = -1
     getHeight (Node h _ _ _) = h
 
@@ -52,7 +45,9 @@ foldTree = foldr insert Leaf
 xor :: [Bool] -> Bool
 xor = odd . length . trues
   where
-    trues = foldr (\b acc -> if b then b:acc else acc) []
+    trues = foldr noFalse []
+    noFalse b | b = (b :)
+              | otherwise = id
 
 map' :: (a -> b) -> [a] -> [b]
 map' f = foldr ((:) . f) []
