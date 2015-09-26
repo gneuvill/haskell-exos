@@ -1,4 +1,4 @@
-module StackVM (StackVal(..), StackExp(..), Stack, Program, stackVM) where
+module Week5.StackVM (StackVal(..), StackExp(..), Stack, Program, stackVM) where
 
 -- Values that may appear in the stack. Such a value will also be
 -- returned by the stackVM program execution function.
@@ -55,4 +55,4 @@ execute (BVal s1 : BVal s2 : ss) (Or : xs)  = execute (s':ss) xs
 execute (_:_:_) (Or:_)                      = errType "Or"
 execute _ (Or:_)                            = errUnderflow "Or"
 
-test = stackVM [PushI 3, PushI 5, Add]
+-- test = stackVM [PushI 3, PushI 5, Add]

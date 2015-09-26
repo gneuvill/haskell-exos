@@ -1,6 +1,6 @@
 name:                haskell-exos
 version:             0.1.0.0
-synopsis:            Exercices d'apprentissage d'Haskell
+synopsis:            Exercices d'apprentissage du langage Haskell
 description:         Please see README.md
 homepage:            http://github.com/gneuvill/haskell-exos
 license:             BSD3
@@ -19,6 +19,7 @@ library
                      , Week2.LogAnalysis
                      , Week3.Golf
   build-depends:       base >= 4.7 && < 5
+                     , containers >= 0.5.5.1
                      , safe
   ghc-options:         -Wall
   default-language:    Haskell2010
@@ -28,6 +29,7 @@ executable haskell-exos-exe
   main-is:             Main.hs
   ghc-options:         -Wall -threaded -rtsopts -with-rtsopts=-N
   build-depends:       base
+                     , containers >= 0.5.5.1
                      , haskell-exos
   default-language:    Haskell2010
 
@@ -36,6 +38,7 @@ test-suite haskell-exos-test
   hs-source-dirs:      test
   main-is:             Spec.hs
   build-depends:       base
+                     , containers >= 0.5.5.1
                      , haskell-exos
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N
   default-language:    Haskell2010
