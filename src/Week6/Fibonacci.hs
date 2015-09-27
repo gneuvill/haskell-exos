@@ -26,7 +26,7 @@ fibs4 = fib3 1 0
     fib3 a b = b : fib3 (a + b) a
 
 niceFibs :: [Integer]
-niceFibs = 0 : 1 : zipWith (+) fibs4 (tail fibs4)
+niceFibs = 0 : 1 : zipWith (+) niceFibs (tail niceFibs)
 
 -- Exo 3
 
