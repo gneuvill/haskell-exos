@@ -31,6 +31,7 @@ niceFibs = 0 : 1 : zipWith (+) niceFibs (tail niceFibs)
 -- Exo 3
 
 data Stream a = a :+ (Stream a)
+infixr 5 :+
 
 streamToList :: Stream a -> [a]
 streamToList (a :+ as) = a : streamToList as
@@ -55,3 +56,22 @@ streamFromSeed f a = a :+ streamFromSeed f (f a)
 nats :: Stream Integer
 nats = streamFromSeed (+1) 0
 
+interleave :: Stream a -> Stream a -> Stream a
+interleave (x :+ xs) ys = x :+ interleave ys xs
+
+ruler :: Stream Integer
+ruler = rulerLoop 0
+  where
+    rulerLoop n = let ns = streamRepeat n
+                  in interleave ns (rulerLoop $ n + 1)
+
+rulerMaths :: Stream Integer
+rulerMaths = streamMap f natsFrom1
+  where
+    f n = head $ reverse $ takeWhile ((== 0) . (mod n) . (2^)) [0..]
+    natsFrom1 = streamFromSeed (+1) 1  :: Stream Integer
+
+testRuler :: Int -> Bool
+testRuler n = toSizedList ruler == toSizedList rulerMaths
+  where
+    toSizedList = (take n) . streamToList
